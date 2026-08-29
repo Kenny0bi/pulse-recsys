@@ -1,0 +1,4 @@
+raw positives: 12,452,811
+train: 11,177,829 interactions | test: 169,923
+users: 148,745 | items: 17,102
+cutoff timestamp: 1514776152

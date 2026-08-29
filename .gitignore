@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+.venv/
+data/ml-25m.zip
+data/ml-25m/
+data/*.npz
+data/*.npy
+assets/*.png
+media/
+.DS_Store
+nohup.out

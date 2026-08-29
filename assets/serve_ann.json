@@ -1,0 +1,16 @@
+{
+ "build_s": 166.6,
+ "n_items": 17102,
+ "ef=20": {
+  "recall_vs_exact": 0.9638,
+  "qps": 301.6
+ },
+ "ef=50": {
+  "recall_vs_exact": 0.9928,
+  "qps": 284.4
+ },
+ "ef=100": {
+  "recall_vs_exact": 0.9974,
+  "qps": 193.0
+ }
+}

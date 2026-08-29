@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 520" font-family="Menlo, Consolas, monospace">
+<rect width="1160" height="520" fill="#171019" rx="14"/>
+<text x="46" y="52" fill="#efe8f4" font-size="21" font-weight="bold">counting, learning, and one line of math</text>
+<text x="46" y="74" fill="#94849e" font-size="12.5" font-family="Georgia, serif" font-style="italic">recall@10 on the temporal test, 25M MovieLens ratings: the first two-tower lost to a counter, and the fix is in the caption</text>
+<text x="404" y="148" fill="#efe8f4" font-size="13" text-anchor="end">popularity counter</text>
+<text x="404" y="166" fill="#94849e" font-size="10" text-anchor="end">no learning at all: recommend what everyone likes</text>
+<line x1="420" y1="154" x2="787" y2="154" stroke="#94849e" stroke-width="26" stroke-linecap="round"/>
+<text x="803" y="159" fill="#94849e" font-size="14" font-weight="bold">0.058</text>
+<text x="404" y="226" fill="#efe8f4" font-size="13" text-anchor="end">BPR matrix factorization</text>
+<text x="404" y="244" fill="#94849e" font-size="10" text-anchor="end">the 2009 classic, tuned fairly (lr 0.08, 4 epochs)</text>
+<line x1="420" y1="232" x2="752" y2="232" stroke="#2dd4bf" stroke-width="26" stroke-linecap="round"/>
+<text x="768" y="237" fill="#2dd4bf" font-size="14" font-weight="bold">0.053</text>
+<text x="404" y="304" fill="#efe8f4" font-size="13" text-anchor="end">two-tower, first attempt</text>
+<text x="404" y="322" fill="#94849e" font-size="10" text-anchor="end">in-batch softmax without the logQ correction</text>
+<line x1="420" y1="310" x2="534" y2="310" stroke="#f87171" stroke-width="26" stroke-linecap="round"/>
+<text x="550" y="315" fill="#f87171" font-size="14" font-weight="bold">0.018</text>
+<text x="404" y="382" fill="#efe8f4" font-size="13" text-anchor="end">two-tower + logQ</text>
+<text x="404" y="400" fill="#94849e" font-size="10" text-anchor="end">one line of math: logits minus log item frequency</text>
+<line x1="420" y1="388" x2="956" y2="388" stroke="#facc15" stroke-width="26" stroke-linecap="round"/>
+<text x="972" y="393" fill="#facc15" font-size="14" font-weight="bold">0.085</text>
+<text x="70" y="462" fill="#94849e" font-size="10.5" font-family="Georgia, serif" font-style="italic">the gradients were proven correct (float64 check, 1.3e-06) before the failure was blamed on the objective:</text>
+<text x="70" y="478" fill="#94849e" font-size="10.5" font-family="Georgia, serif" font-style="italic">popular items were being punished for appearing as in-batch negatives in proportion to their popularity</text>
+</svg>
