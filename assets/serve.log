@@ -1,7 +1,7 @@
 building HNSW over 17,102 item embeddings...
   inserted 10,000/17,102
-built in 167s
-20 {'recall_vs_exact': 0.9638, 'qps': 301.6}
-50 {'recall_vs_exact': 0.9928, 'qps': 284.4}
-100 {'recall_vs_exact': 0.9974, 'qps': 193.0}
+built in 152s
+20 {'recall_vs_exact': 0.9622, 'qps': 474.9}
+50 {'recall_vs_exact': 0.9912, 'qps': 317.8}
+100 {'recall_vs_exact': 0.9962, 'qps': 208.4}
 serving benchmark complete

@@ -44,7 +44,8 @@ def render_ladder():
         ("BPR matrix factorization", res["bpr_mf"]["recall"]["10"]
          if "10" in res["bpr_mf"]["recall"] else res["bpr_mf"]["recall"][10], TEAL,
          "the 2009 classic, tuned fairly (lr 0.08, 4 epochs)"),
-        ("two-tower, first attempt", 0.0181, RED,
+        ("two-tower, no logQ", res["two_tower_no_logq"]["recall"]["10"]
+         if "10" in res["two_tower_no_logq"]["recall"] else res["two_tower_no_logq"]["recall"][10], RED,
          "in-batch softmax without the logQ correction"),
         ("two-tower + logQ", res["two_tower"]["recall"]["10"]
          if "10" in res["two_tower"]["recall"] else res["two_tower"]["recall"][10], GOLD,
@@ -55,7 +56,7 @@ def render_ladder():
     hi = max(v for _, v, _, _ in rows) * 1.12
     s = header(W, H, "counting, learning, and one line of math",
                "recall@10 on the temporal test, 25M MovieLens ratings: the "
-               "first two-tower lost to a counter, and the fix is in the caption")
+               "two-tower without logQ loses to a counter, and the fix is in the caption")
     for i, (name, v, col, desc) in enumerate(rows):
         y = 150 + i * 78
         s.append(f'<text x="{x0 - 16}" y="{y - 2}" fill="{INK}" font-size="13" '
@@ -125,7 +126,7 @@ def render_timeline():
 def render_handoff():
     d = json.loads((ASSETS / "serve_ann.json").read_text())
     W, H = 1160, 440
-    px0, py1 = 220, H - 130
+    px0, py1 = 220, H - 100  # bars low enough that value labels clear the subtitle
     s = header(W, H, "the handoff: my embeddings through my index",
                "the two-tower's 17K item vectors served by the HNSW built in "
                "this series' sixth project")
@@ -135,7 +136,7 @@ def render_handoff():
         x = px0 + band * (i + 0.5)
         r = d[ef]["recall_vs_exact"]
         q = d[ef]["qps"]
-        h = 200 * r
+        h = 180 * r
         s.append(f'<line x1="{x:.0f}" y1="{py1}" x2="{x:.0f}" y2="{py1 - h:.0f}" '
                  f'stroke="{GOLD}" stroke-width="42" stroke-linecap="round"/>')
         s.append(f'<text x="{x:.0f}" y="{py1 - h - 44:.0f}" fill="{GOLD}" '

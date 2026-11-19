@@ -11,8 +11,8 @@ Also: the best failure of the whole ten-project series, kept on display.
 
 ## The failure worth the whole project
 
-My first two-tower scored recall@10 of **0.018, three times worse than a
-popularity counter.** Before touching hyperparameters I gradchecked the
+Trained the obvious way, my two-tower scores recall@10 of **0.031, about half
+of what a popularity counter gets.** Before touching hyperparameters I gradchecked the
 hand-written training step in float64: correct to 1.3e-06. The math was
 fine; the OBJECTIVE was wrong. In-batch softmax uses the other items in a
 batch as negatives, and popular items land in batches in proportion to their
@@ -22,7 +22,7 @@ log sampling probability from its logit.
 
 ![The logQ correction animated](assets/logq.gif)
 
-Same model, one line later: **recall@10 = 0.085**, 46% above the counter and
+Same model, one line later: **recall@10 = 0.086**, 47% above the counter and
 61% above tuned BPR matrix factorization. (Animation source:
 [assets/manim_logq.py](assets/manim_logq.py), video in
 [assets/logq.mp4](assets/logq.mp4).)
@@ -44,15 +44,17 @@ franchises, and taste drift straight across the line
 | model | recall@10 | recall@50 | NDCG@10 |
 |---|---|---|---|
 | popularity counter | 0.058 | 0.089 | 0.060 |
-| BPR-MF (lr 0.08, 4 epochs) | 0.053 | 0.088 | 0.052 |
-| two-tower, no logQ | 0.018 | 0.037 | 0.017 |
-| **two-tower + logQ** | **0.085** | **0.139** | **0.085** |
+| BPR-MF (lr 0.08, 4 epochs) | 0.053 | 0.086 | 0.052 |
+| two-tower, no logQ | 0.031 | 0.057 | 0.030 |
+| **two-tower + logQ** | **0.086** | **0.137** | **0.086** |
 
 Fairness notes that cost real effort: the BPR baseline's first configuration
 was undertrained (loss stuck at ln 2), and shipping it would have flattered
 the two-tower, so it got retuned before the comparison counted. Seen-item
 masking is applied to every model identically. All evaluation is on 6,198
-users active after the cutoff, 169,923 held-out interactions.
+users active after the cutoff, 169,923 held-out interactions. All four rows
+come from one run of `python benchmarks/train_all.py`; reruns have moved the third
+decimal (multithreaded BLAS), not the ranking.
 
 ## The handoff
 

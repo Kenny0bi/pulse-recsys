@@ -1,4 +1,5 @@
-"""Train and evaluate the ladder: popularity -> BPR-MF -> two-tower.
+"""Train and evaluate the ladder: popularity -> BPR-MF -> two-tower without
+and with the logQ correction.
 
 Everything logged to assets/results.json; loss curves to JSONL.
 """
@@ -75,7 +76,30 @@ def main():
     results["bpr_mf"] = {"recall": r, "ndcg": n, "train_s": round(time.time() - t0, 1)}
     print("bpr_mf:", results["bpr_mf"], flush=True)
 
-    # ---- two-tower with in-batch softmax
+    # ---- two-tower WITHOUT the logQ correction: the failure, kept on the ladder
+    tt0 = TwoTower(n_users, n_items, dim=64, item_freq=None)
+    rng = np.random.default_rng(1)
+    t0 = time.time()
+    for ep in range(EPOCHS_TT):
+        for step, (u, i) in enumerate(batches(tr_u, tr_i, rng, BATCH)):
+            loss = tt0.train_step(u, i)
+            if step % 200 == 0:
+                log.append({"model": "twotower_no_logq", "epoch": ep, "step": step,
+                            "loss": loss})
+                print(f"tt0 ep{ep} step{step} loss {loss:.4f} "
+                      f"({time.time() - t0:,.0f}s)", flush=True)
+
+    V0 = tt0.item_vectors()
+
+    def tt0_scores(batch_users):
+        return tt0.user_vectors(batch_users) @ V0.T
+
+    r, n = evaluate_scores(tt0_scores, eval_users, user_pos, seen, n_items)
+    results["two_tower_no_logq"] = {"recall": r, "ndcg": n,
+                                    "train_s": round(time.time() - t0, 1)}
+    print("two_tower_no_logq:", results["two_tower_no_logq"], flush=True)
+
+    # ---- two-tower with in-batch softmax and the logQ correction
     tt = TwoTower(n_users, n_items, dim=64, item_freq=pop)
     rng = np.random.default_rng(1)
     t0 = time.time()

@@ -54,7 +54,7 @@ class LogQCorrection(Scene):
         push = Text("...and every appearance off the diagonal\npushes its score DOWN",
                     font=MONO, font_size=15, color=RED).shift(RIGHT * 3.3 + UP * 1.0)
         self.play(FadeIn(push), run_time=0.8)
-        verdict = Text("result here: recall 0.018, worse than counting",
+        verdict = Text("result here: recall 0.031, half of counting",
                        font=MONO, font_size=14, color=RED).shift(RIGHT * 3.3 + UP * 0.25)
         self.play(FadeIn(verdict), run_time=0.7)
         self.wait(0.8)
@@ -68,7 +68,7 @@ class LogQCorrection(Scene):
         self.play(FadeIn(eq), run_time=0.9)
         self.play(*[c.animate.set_fill(BG, opacity=1.0) for c in colcells],
                   FadeIn(eqnote), run_time=1.0)
-        after = Text("same model, one line later: recall 0.085,\n46% above the counter",
+        after = Text("same model, one line later: recall 0.086,\n47% above the counter",
                      font=MONO, font_size=15, color=GOLD).shift(RIGHT * 3.3 + DOWN * 2.75)
         self.play(FadeOut(verdict), FadeIn(after),
                   Flash(eq, color=GOLD, line_length=0.3), run_time=1.0)
